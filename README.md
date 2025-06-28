@@ -14,6 +14,12 @@ project-root/
 
 ---
 
+## 🎥 Full Demo
+
+[![Watch the video]](https://youtu.be/MnVO_YBagnM)
+
+---
+
 ## 🚀 Features
 
 - RESTful API design
