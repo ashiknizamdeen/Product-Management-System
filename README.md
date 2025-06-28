@@ -43,25 +43,47 @@ project-root/
 
 ### ⚙️ Steps
 
-1. **Clone the repo**
+Follow these steps to get both the backend and frontend up and running.
 
-```bash
-git clone https://github.com/YOUR_USERNAME/flutter-api-backend.git
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/flutter-api-backend.git
+    cd flutter-api-backend
+    ```
 
-2. **Setup Frontend and Backend**
-### Backend Setup
+2.  **Backend Setup (Node.js)**
+    *   Navigate to the backend directory:
+        ```bash
+        cd flutter-api-backend
+        ```
+    *   Install the required packages:
+        ```bash
+        npm install
+        ```
+    *   Start the server:
+        ```bash
+        npm start
+        ```
+    *   ✅ The API should now be running on `http://localhost:3000`.
 
-```bash
-cd flutter-api-backend
-npm install
-npm start
+3.  **Frontend Setup (Flutter)**
+    *   In a **new terminal**, navigate to the frontend directory:
+        ```bash
+        cd flutter-api-app
+        ```
+    *   Get the Flutter packages:
+        ```bash
+        flutter pub get
+        ```
+    *   Run the app:
+        ```bash
+        flutter run
+        ```
+    *   📱 The Flutter application should now be running and communicating with the local backend.
 
-### Frontend Setup
-cd flutter-api-app
-flutter pub get
-flutter run
+## 📍 API Endpoints
 
-API Endpoints
+A summary of the available REST API endpoints.
 
 - To Create New Account
 POST /api/users/register
