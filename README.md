@@ -32,6 +32,7 @@ project-root/
 
 ## 🛠 Tech Stack
 
+- Flutter
 - Node.js
 - Express.js
 - MySQL (via mysql2/promise)
