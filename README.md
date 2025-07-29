@@ -14,7 +14,7 @@ project-root/
 
 ---
 
-## 🎥 Full Demo
+## 🎥 Check out Video Demo
 
 [![Watch the video]](https://youtu.be/MnVO_YBagnM)
 
