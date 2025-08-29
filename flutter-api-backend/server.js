@@ -1,65 +1,17 @@
+require("dotenv").config();
 const express = require("express");
-const mysql = require("mysql2/promise");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const Database = require("./config/database");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Global DB pool
+const database = new Database();
 let db;
-
-// Initialize pool and create tables
-async function initDB() {
-  try {
-    const tempConn = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "password",
-    });
-    await tempConn.execute("CREATE DATABASE IF NOT EXISTS flutter_api_db");
-    await tempConn.end();
-
-    //Connection pool for scalability
-    db = mysql.createPool({
-      host: "localhost",
-      user: "root",
-      password: "password",
-      database: "flutter_api_db",
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0,
-    });
-
-    await db.execute(`
-      CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-
-    await db.execute(`
-      CREATE TABLE IF NOT EXISTS products (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        price DECIMAL(10, 2) NOT NULL,
-        quantity INT NOT NULL DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-      )
-    `);
-
-    console.log("Connected to MySQL and initialized tables.");
-  } catch (error) {
-    console.error("Database init error:", error);
-  }
-}
 
 app.post("/api/users/register", async (req, res) => {
   try {
@@ -251,13 +203,19 @@ app.delete("/api/products/:id", async (req, res) => {
 
 // Start server
 app.listen(PORT, async () => {
-  await initDB();
-  console.log(`Server running on http://localhost:${PORT}`);
+  try {
+    await database.initialize();
+    db = database.getPool();
+    console.log(`Server running on http://localhost:${PORT}`);
+  } catch (error) {
+    console.error("Failed to initialize database:", error);
+    process.exit(1);
+  }
 });
 
 //smoother shutdown
 process.on("SIGINT", async () => {
-  if (db && db.end) await db.end();
+  await database.close();
   console.log("DB pool closed. Server shutting down.");
   process.exit();
 });
