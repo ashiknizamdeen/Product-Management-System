@@ -1,4 +1,6 @@
-# Flutter API Backend (Node.js + MySQL)
+# Flutter Mobile App
+
+# API Backend (Node.js + MySQL)
 **Website will be deployed very soon!**
 This project is a RESTful API built with Node.js, Express, and MySQL. It is designed to be used with a Flutter frontend.
 
