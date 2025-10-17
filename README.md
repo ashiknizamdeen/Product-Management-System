@@ -1,4 +1,4 @@
-# Flutter Mobile App
+# Management Mobile App
 
 # API Backend (Node.js + MySQL)
 **Website will be deployed very soon!**
